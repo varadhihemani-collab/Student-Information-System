@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Information System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="logo">
+            <div class="logo-icon">🎓</div>
+            <h2>StudentInfo</h2>
+            <p>Information System</p>
+        </div>
+        <nav>
+            <a href="#dashboard">🏠 Dashboard</a>
+            <a href="#students">👨‍🎓 Students</a>
+            <a href="#registration">📝 Register Student</a>
+            <a href="#academic">📚 Academic Records</a>
+            <a href="#attendance">📅 Attendance</a>
+            <a href="#fees">💰 Fee Management</a>
+            <a href="#documents">📁 Documents</a>
+            <a href="#idcard">🪪 Student ID Card</a>
+            <a href="#reports">📊 Reports</a>
+            <a href="#login">🔐 Login / Register</a>
+        </nav>
+    </aside>
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <!-- TOP BAR -->
+        <header class="top-bar">
+            <div>
+                <h1>Student Information System</h1>
+                <p>Manage student information, academics and records</p>
+            </div>
+            <div class="top-actions">
+                <button id="darkModeBtn" onclick="toggleDarkMode()">
+                    🌙 Dark Mode
+                </button>
+                <div class="profile-badge">
+                    👤 Admin
+                </div>
+            </div>
+        </header>
+        <!-- DASHBOARD -->
+        <section id="dashboard" class="section">
+            <div class="section-heading">
+                <div>
+                    <h2>Dashboard</h2>
+                    <p>Student overview and academic statistics</p>
+                </div>
+            </div>
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-icon">👨‍🎓</div>
+                    <h3>Total Students</h3>
+                    <p id="totalStudents">0</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <h3>Active Students</h3>
+                    <p id="activeStudents">0</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🏫</div>
+                    <h3>Departments</h3>
+                    <p id="totalDepartments">0</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📅</div>
+                    <h3>Attendance</h3>
+                    <p id="attendancePercentage">0%</p>
+                </div>
+            </div>
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <h3>📈 Enrollment Overview</h3>
+                    <p>Students currently registered in the system.</p>
+                    <div class="progress-bar">
+                        <div id="enrollmentProgress"></div>
+                    </div>
+                </div>
+                <div class="dashboard-card">
+                    <h3>🎓 Academic Performance</h3>
+                    <p>Average student GPA / CGPA</p>
+                    <div class="big-number" id="averageGPA">0.0</div>
+                </div>
+            </div>
+        </section>
+        <!-- STUDENT LIST -->
+        <section id="students" class="section">
+            <div class="section-heading">
+                <div>
+                    <h2>👨‍🎓 Student Listing</h2>
+                    <p>Search and filter registered students</p>
+                </div>
+            </div>
+            <div class="filter-container">
+                <input
+                    type="text"
+                    id="searchStudent"
+                    placeholder="🔍 Search by name or student ID..."
+                >
+                <select id="departmentFilter">
+                    <option value="">All Departments</option>
+                </select>
+                <select id="yearFilter">
+                    <option value="">All Years</option>
+                    <option value="1st Year">1st Year</option>
+                    <option value="2nd Year">2nd Year</option>
+                    <option value="3rd Year">3rd Year</option>
+                    <option value="4th Year">4th Year</option>
+                </select>
+                <select id="statusFilter">
+                    <option value="">All Status</option>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                    <option value="Graduated">Graduated</option>
+                </select>
+            </div>
+            <div id="studentList" class="student-grid"></div>
+            <div id="studentProfile" class="profile-panel"></div>
+        </section>
+        <!-- REGISTRATION -->
+        <section id="registration" class="section">
+            <div class="section-heading">
+                <div>
+                    <h2>📝 Student Registration</h2>
+                    <p>Register a new student using the steps below.</p>
+                </div>
+            </div>
+            <!-- STEP INDICATORS -->
+            <div class="steps-container">
+                <div id="stepIndicator1" class="step active">
+                    <span>1</span>
+                    <div>Personal</div>
+                </div>
+                <div class="step-line"></div>
+                <div id="stepIndicator2" class="step">
+                    <span>2</span>
+                    <div>Academic</div>
+                </div>
+                <div class="step-line"></div>
+                <div id="stepIndicator3" class="step">
+                    <span>3</span>
+                    <div>Guardian</div>
+                </div>
+            </div>
+            <form id="studentForm">
+                <!-- STEP 1 -->
+                <div id="registrationStep1" class="registration-step active">
+                    <h3>👤 Personal Information</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Student ID *</label>
+                            <input type="text" id="studentId" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Full Name *</label>
+                            <input type="text" id="studentName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Date of Birth *</label>
+                            <input type="date" id="dob" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Gender *</label>
+                            <select id="gender" required>
+                                <option value="">Select Gender</option>
+                                <option>Male</option>
+                                <option>Female</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Nationality</label>
+                            <input type="text" id="nationality" value="Indian">
+                        </div>
+                        <div class="form-group">
+                            <label>Blood Group</label>
+                            <select id="bloodGroup">
+                                <option value="">Select Blood Group</option>
+                                <option>A+</option>
+                                <option>A-</option>
+                                <option>B+</option>
+                                <option>B-</option>
+                                <option>AB+</option>
+                                <option>AB-</option>
+                                <option>O+</option>
+                                <option>O-</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Contact Number *</label>
+                            <input type="tel" id="contact" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email *</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Permanent Address</label>
+                            <textarea id="permanentAddress" rows="3"></textarea>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Current Address</label>
+                            <textarea id="currentAddress" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>City</label>
+                            <input type="text" id="city">
+                        </div>
+                        <div class="form-group">
+                            <label>State</label>
+                            <input type="text" id="state">
+                        </div>
+                        <div class="form-group">
+                            <label>Pin Code</label>
+                            <input type="text" id="pinCode">
+                        </div>
+                        <div class="form-group">
+                            <label>Country</label>
+                            <input type="text" id="country" value="India">
+                        </div>
+                    </div>
+                    <div class="form-buttons">
+                        <button
+                            type="button"
+                            class="primary-btn"
+                            onclick="nextRegistrationStep(2)"
+                        >
+                            Next → Academic
+                        </button>
+                    </div>
+                </div>
+                <!-- STEP 2 -->
+                <div id="registrationStep2" class="registration-step">
+                    <h3>📚 Academic Information</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Department *</label>
+                            <select id="department" required>
+                                <option value="">Select Department</option>
+                                <option>Computer Science</option>
+                                <option>Information Technology</option>
+                                <option>Business Administration</option>
+                                <option>Electronics</option>
+                                <option>Mechanical Engineering</option>
+                                <option>Civil Engineering</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Year / Semester *</label>
+                            <select id="year" required>
+                                <option value="">Select Year</option>
+                                <option>1st Year</option>
+                                <option>2nd Year</option>
+                                <option>3rd Year</option>
+                                <option>4th Year</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Enrollment Date *</label>
+                            <input type="date" id="enrollmentDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Academic Status *</label>
+                            <select id="academicStatus" required>
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                                <option value="Graduated">Graduated</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>GPA / CGPA</label>
+                            <input
+                                type="number"
+                                id="gpa"
+                                min="0"
+                                max="10"
+                                step="0.1"
+                                placeholder="Example: 8.5"
+                            >
+                        </div>
+                    </div>
+                    <div class="form-buttons">
+                        <button
+                            type="button"
+                            class="secondary-btn"
+                            onclick="nextRegistrationStep(1)"
+                        >
+                            ← Back
+                        </button>
+                        <button
+                            type="button"
+                            class="primary-btn"
+                            onclick="nextRegistrationStep(3)"
+                        >
+                            Next → Guardian
+                        </button>
+                    </div>
+                </div>
+                <!-- STEP 3 -->
+                <div id="registrationStep3" class="registration-step">
+                    <h3>👨‍👩‍👧 Guardian Information</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Father's Name</label>
+                            <input type="text" id="fatherName">
+                        </div>
+                        <div class="form-group">
+                            <label>Mother's Name</label>
+                            <input type="text" id="motherName">
+                        </div>
+                        <div class="form-group">
+                            <label>Guardian Contact *</label>
+                            <input type="tel" id="guardianContact" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Guardian Email</label>
+                            <input type="email" id="guardianEmail">
+                        </div>
+                        <div class="form-group">
+                            <label>Relation</label>
+                            <select id="relation">
+                                <option value="">Select Relation</option>
+                                <option>Father</option>
+                                <option>Mother</option>
+                                <option>Guardian</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-buttons">
+                        <button
+                            type="button"
+                            class="secondary-btn"
+                            onclick="nextRegistrationStep(2)"
+                        >
+                            ← Back
+                        </button>
+                        <button type="submit" class="primary-btn">
+                            ✅ Register Student
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <div id="registrationMessage" class="message-box"></div>
+        </section>
+        <!-- ACADEMIC RECORDS -->
+        <section id="academic" class="section">
+            <div class="section-heading">
+                <div>
+                    <h2>📚 Academic Records</h2>
+                    <p>Add and view student subject records</p>
+                </div>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Select Student</label>
+                    <select id="academicStudent"></select>
+                </div>
+                <div class="form-group">
+                    <label>Subject</label>
+                    <input type="text" id="subjectName">
+                </div>
+                <div class="form-group">
+                    <label>Marks</label>
+                    <input type="number" id="subjectMarks" min="0" max="100">
+                </div>
+                <div class="form-group">
+                    <label>Credits</label>
+                    <input type="number" id="subjectCredits" min="1" max="10">
+                </div>
+            </div>
+            <button class="primary-btn" onclick="addAcademicRecord()">
+                + Add Academic Record
+            </button>
+            <div id="academicRecords" class="records-container"></div>
+        </section>
+        <!-- ATTENDANCE -->
+        <section id="attendance" class="section">
+            <div class="section-heading">
+                <div>
+                    <h2>📅 Attendance Records</h2>
+                    <p>Manage daily student attendance</p>
+                </div>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Select Student</label>
+                    <select id="attendanceStudent"></select>
+                </div>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="date" id="attendanceDate">
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="attendanceStatus">
+                        <option value="Present">Present</option>
+                        <option value="Absent">Absent</option>
+                    </select>
+                </div>
+            </div>
+            <button class="primary-btn" onclick="addAttendance()">
+                + Add Attendance
+            </button>
+            <div id="attendanceRecords" class="records-container"></div>
+        </section>
+        <!-- FEES -->
+        <section id="fees" class="section">
+            <div class="section-heading">
+                <div>
+                    <h2>💰 Fee Management</h2>
+                    <p>Manage student fee information</p>
+                </div>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Select Student</label>
+                    <select id="feeStudent"></select>
+                </div>
+                <div class="form-group">
+                    <label>Total Fee</label>
+                    <input type="number" id="totalFee" min="0">
+                </div>
+                <div class="form-group">
+                    <label>Paid Fee</label>
+                    <input type="number" id="paidFee" min="0">
+                </div>
+                <div class="form-group">
+                    <label>Fee Status</label>
+                    <select id="feeStatus">
+                        <option value="Paid">Paid</option>
+                        <option value="Partial">Partial</option>
+                        <option value="Pending">Pending</option>
+                    </select>
+                </div>
+            </div>
+            <button class="primary-btn" onclick="addFeeRecord()">
+                + Add Fee Record
+            </button>
+            <div id="feeRecords" class="records-container"></div>
+        </section>
+        <!-- DOCUMENTS -->
+        <section id="documents" class="section">
+            <div class="section-heading">
+                <div>
+                    <h2>📁 Student Documents</h2>
+                    <p>Select student documents for management</p>
+                </div>
+            </div>
+            <div class="document-box">
+                <label>Select Student</label>
+                <select id="documentStudent"></select>
+                <label>Select Document</label>
+                <input
+                    type="file"
+                    id="studentDocument"
+                    onchange="handleDocumentSelection()"
+                >
+                <div id="documentMessage" class="message-box"></div>
+            </div>
+        </section>
+        <!-- ID CARD -->
+        <section id="idcard" class="section">
+            <div class="section-heading">
+                <div>
+                    <h2>🪪 Student ID Card</h2>
+                    <p>Generate a student identification card</p>
+                </div>
+            </div>
+            <div class="form-group id-selector">
+                <label>Select Student</label>
+                <select id="idCardStudent"></select>
+            </div>
+            <button class="primary-btn" onclick="generateIDCard()">
+                Generate ID Card
+            </button>
+            <div id="idCardResult"></div>
+        </section>
+        <!-- REPORTS -->
+        <section id="reports" class="section">
+            <div class="section-heading">
+                <div>
+                    <h2>📊 Reports</h2>
+                    <p>Generate student and academic reports</p>
+                </div>
+            </div>
+            <div class="report-buttons">
+                <button class="primary-btn" onclick="generateReport()">
+                    📊 Generate Report
+                </button>
+                <button class="secondary-btn" onclick="exportStudentsCSV()">
+                    📥 Export CSV
+                </button>
+                <button class="secondary-btn" onclick="window.print()">
+                    🖨️ Print Report
+                </button>
+            </div>
+            <div id="reportResult"></div>
+        </section>
+        <!-- LOGIN -->
+        <section id="login" class="section">
+            <div class="section-heading">
+                <div>
+                    <h2>🔐 Login / Register</h2>
+                    <p>Demo authentication for the student system</p>
+                </div>
+            </div>
+            <div class="login-grid">
+                <div class="login-card">
+                    <h3>🔑 Login</h3>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="loginEmail">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="loginPassword">
+                    </div>
+                    <button class="primary-btn" onclick="loginUser()">
+                        Login
+                    </button>
+                </div>
+                <div class="login-card">
+                    <h3>📝 Register</h3>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="registerEmail">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="registerPassword">
+                    </div>
+                    <button class="primary-btn" onclick="registerUser()">
+                        Create Account
+                    </button>
+                </div>
+            </div>
+            <div id="loginMessage" class="message-box"></div>
+        </section>
+        <footer>
+            <p>AI Student Assistant © 2026 | Student Information System</p>
+            <p>Data Alcott Systems - Web Development Internship Task</p>
+        </footer>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
